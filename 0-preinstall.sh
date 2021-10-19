@@ -7,6 +7,7 @@
 #  Arch Linux Post Install Setup and Config
 #-------------------------------------------------------------------------
 
+#Set up mirrors
 echo "-------------------------------------------------"
 echo "Setting up mirrors for optimal download          "
 echo "-------------------------------------------------"
