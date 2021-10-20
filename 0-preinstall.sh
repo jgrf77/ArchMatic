@@ -7,17 +7,26 @@
 #  Arch Linux Post Install Setup and Config
 #-------------------------------------------------------------------------
 
-#Set up mirrors
+#SET UP MIRRORS
 echo "-------------------------------------------------"
 echo "Setting up mirrors for optimal download          "
 echo "-------------------------------------------------"
+#Look up country iso-code with ifconfig.co and set as variable iso
 iso=$(curl -4 ifconfig.co/country-iso)
+#Activate network time synchronisation
 timedatectl set-ntp true
+#Install pacman-contrib and terminus-font
 pacman -S --noconfirm pacman-contrib terminus-font
+#Set font to ter-v22b
 setfont ter-v22b
+#Install reflector rsync
 pacman -S --noconfirm reflector rsync
+#create a backup of the mirrorlist
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+#update mirror list with fastest mirrors
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
+
+#MAKE MOUNT DIRECTORY
 mkdir /mnt
 
 
