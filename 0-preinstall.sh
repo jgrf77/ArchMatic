@@ -26,23 +26,32 @@ mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 #update mirror list with fastest mirrors
 reflector -a 48 -c $iso -f 5 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 
+
 #MAKE MOUNT DIRECTORY
 mkdir /mnt
 
 
+#FORMAT DISK
+#Install disk partitioning utilities
 echo -e "\nInstalling prereqs...\n$HR"
-pacman -S --noconfirm gptfdisk btrfs-progs
+pacman -S --noconfirm --needed gptfdisk btrfs-progs
 
+#List the disk partition table
 echo "-------------------------------------------------"
 echo "-------select your disk to format----------------"
 echo "-------------------------------------------------"
 lsblk
+
+#Prompt user to select disk to be partitioned and set as variable DISK
 echo "Please enter disk to work on: (example /dev/sda)"
 read DISK
+
+#Seek confirmation to format disk and store as variable formatdisk
 echo "THIS WILL FORMAT AND DELETE ALL DATA ON THE DISK"
 read -p "are you sure you want to continue (Y/N):" formatdisk
-case $formatdisk in
 
+#If $formatdisk is yes then run disc format commands
+case $formatdisk in
 y|Y|yes|Yes|YES)
 echo "--------------------------------------"
 echo -e "\nFormatting disk...\n$HR"
